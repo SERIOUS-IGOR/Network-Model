@@ -10,7 +10,7 @@ public class ActiveElement implements PathElement {
     private IPadress DefaultGateway = new IPadress();
     private double Cost = 0.0;
     private double TimeDelay = 0.0;
-    private String info = "No information detected";
+    private String info = null;
     private int ID = 0;
 
     public void setID(int ID) {
