@@ -15,8 +15,13 @@ public class IPadress implements Cloneable {
         String another = ip;
         return another;
     }
-
     public void setIp(String ip) {
         this.ip = ip;
+    }
+
+    @Override
+    public String toString() {
+        String another = ip;
+        return another;
     }
 }

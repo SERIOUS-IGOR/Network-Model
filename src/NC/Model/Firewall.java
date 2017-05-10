@@ -8,8 +8,7 @@ public class Firewall extends ActiveElement  {
                  String defaultGateway,
                  double cost,
                  double timeDelay,
-                 String info,
-                 int ID){
-        super(ip, defaultGateway, cost, timeDelay, info, ID);
+                 String info){
+        super(ip, defaultGateway, cost, timeDelay, info);
     }
 }

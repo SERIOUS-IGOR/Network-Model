@@ -7,11 +7,16 @@ import java.util.Map;
  * Created by samok on 20.04.2017.
  */
 public class Network {
-    private HashMap<Integer, PathElement> PathElements = new HashMap<>();
+    protected HashMap<Integer, PathElement> PathElements = new HashMap<>();
     private String name;
-    public Network(String name){
+
+    public Network() {
+    }
+
+    public Network(String name) {
         this.name = name;
     }
+
     public String getName() {
         String other = name;
         return other;
@@ -19,11 +24,6 @@ public class Network {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public HashMap<Integer, PathElement> getPathElements() {
-        HashMap clone = (HashMap) PathElements.clone();
-        return clone;
     }
 
     public void AddPathElement(PathElement element) {
@@ -36,11 +36,21 @@ public class Network {
 
     public void printPathElements() {
         for (Map.Entry entry : PathElements.entrySet()) {
-            System.out.println("Key: " + entry.getKey() + " Value: "
+            System.out.println(entry.getKey() + " "
                     + entry.getValue());
         }
     }
-    public int size(){
-        return PathElements.size();
+
+    public int containsIP(IPadress findIP) {
+        String find = findIP.toString();
+        System.out.println("trying to find node with IP: " + find);
+        for (Map.Entry entry : PathElements.entrySet()) {
+            if (((ActiveElement) entry.getValue()).getIp().toString().equals(find)) {
+                System.out.println( "finded IP: " + find + ", returning check: " + entry.getKey());
+                return (int) entry.getKey();
+            }
+        }
+        System.out.println("not founded node with IP: " + find);
+        return 0;
     }
 }
