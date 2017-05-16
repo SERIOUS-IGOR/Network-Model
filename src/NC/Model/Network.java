@@ -43,14 +43,11 @@ public class Network {
 
     public int containsIP(IPadress findIP) {
         String find = findIP.toString();
-        System.out.println("trying to find node with IP: " + find);
         for (Map.Entry entry : PathElements.entrySet()) {
             if (((ActiveElement) entry.getValue()).getIp().toString().equals(find)) {
-                System.out.println( "finded IP: " + find + ", returning check: " + entry.getKey());
                 return (int) entry.getKey();
             }
         }
-        System.out.println("not founded node with IP: " + find);
         return 0;
     }
 }

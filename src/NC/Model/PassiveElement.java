@@ -8,7 +8,7 @@ import java.util.Collection;
 public class PassiveElement implements PathElement{
     double Cost = 0.0;
     double TimeDelay = 0.0;
-    String info = "No infotmation detected";
+    String info = "No information detected";
 
     @Override
     public double getTimeDelay() {

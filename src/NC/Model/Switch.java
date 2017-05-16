@@ -5,10 +5,11 @@ package NC.Model;
  */
 public class Switch extends ActiveElement  {
     protected Switch(String ip,
-                 String defaultGateway,
-                 double cost,
-                 double timeDelay,
-                 String info){
-        super(ip, defaultGateway, cost, timeDelay, info);
+                     String defaultGateway,
+                     double cost,
+                     double timeDelay,
+                     String connectedOver,
+                     String info) {
+        super(ip, defaultGateway, cost, timeDelay, connectedOver, info);
     }
 }

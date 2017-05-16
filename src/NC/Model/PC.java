@@ -11,7 +11,8 @@ public class PC extends ActiveElement {
                  String defaultGateway,
                  double cost,
                  double timeDelay,
-                 String info){
-        super(ip, defaultGateway, cost, timeDelay, info);
+                 String connectedOver,
+                 String info) {
+        super(ip, defaultGateway, cost, timeDelay, connectedOver, info);
     }
 }
