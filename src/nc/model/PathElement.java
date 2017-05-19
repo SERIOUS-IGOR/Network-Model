@@ -1,6 +1,4 @@
-package NC.Model;
-
-import java.util.Collection;
+package nc.model;
 
 /**
  * Created by samok on 17.04.2017.
@@ -8,6 +6,6 @@ import java.util.Collection;
 public interface PathElement {
     double getTimeDelay();
     double getCost();
-    String getInfo();
+    String getName();
     Integer getID();
 }

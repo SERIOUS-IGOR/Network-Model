@@ -1,4 +1,4 @@
-package NC.Model;
+package nc.model;
 
 /**
  * Created by samok on 17.04.2017.

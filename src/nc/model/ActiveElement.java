@@ -1,7 +1,6 @@
-package NC.Model;
+package nc.model;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * Created by samok on 17.04.2017.
@@ -12,37 +11,47 @@ public class ActiveElement implements PathElement {
     private IPadress defaultGateway = new IPadress();
     private double cost = 0.0;
     private double timeDelay = 0.0;
-    private String info = null;
+    private String name = null;
     private static int idIterator=1;
     private int ID=idIterator;
     private String connectedOver = "Cable";
     protected ActiveElement() {
         idIterator++;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     protected ActiveElement(String ip,
                             String defaultGateway,
                             double cost,
                             double timeDelay,
                             String connectedOver,
-                            String info){
+                            String name){
         setIP(ip);
         setDefaultGateway(defaultGateway);
-        this.cost = cost;
-        this.timeDelay = timeDelay;
+        setCost(cost);
+        setTimeDelay(timeDelay);
         if(connectedOver.toLowerCase().equals("cable")||connectedOver.toLowerCase().equals("hub")){
             this.connectedOver=connectedOver;
         }
         else throw new IllegalArgumentException("WTF MAN");
-        this.info = info;
+        setName(name);
         idIterator++;
     }
 
-    public void getAllInfo(){
-        System.out.println(getIp());
-        System.out.println(getDefaultGateway());
-        System.out.println(getCost());
-        System.out.println(getTimeDelay());
-        System.out.println(info);
+    public String[] getAllInfo(){
+        String[] info = {
+                "Element: " + this.getClass().getSimpleName(),
+                "Name: "+ this.getName(),
+                "IP:" + this.getIp(),
+                "default gateway: " + this.getDefaultGateway(),
+                "cost: " + this.getCost(),
+                "delay: "+ this.getTimeDelay(),
+                "connected over: " + this.connectedOver.getClass().getSimpleName()
+        };
+        return info;
     }
     public IPadress getIp() {
         IPadress another = ip;
@@ -107,9 +116,8 @@ public class ActiveElement implements PathElement {
         }
     }
 
-    @Override
-    public String getInfo() {
-        return info;
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -128,41 +136,5 @@ public class ActiveElement implements PathElement {
     public double getFullDelay(){
         if (connectedOver.equals("cable"))return getTimeDelay()+Cable.delay;
         else return getTimeDelay()+Hub.delay;
-    }
-}
-class Main{
-    public static void main(String [] args) {
-        PC pc1 = new PC("192.168.0.1","192.168.0.254",1.0,60.0,"Cable","PC1");
-        Router r1 = new Router("192.168.0.254","86.168.45.144",10.0,60.0,"Cable","R1");
-        Switch sw1 = new Switch("192.168.0.4","192.168.0.254",4.0,60.0,"Cable","SW1");
-        PC pc2 = new PC("192.168.0.2","192.168.0.4",5.0,60.0,"Cable","PC2");
-        PC pc3 = new PC("192.168.0.3","192.168.0.2",5.0,60.0,"Cable","PC3(start)");
-        PC pc4 = new PC("192.168.0.5","192.168.0.4",1.0,60.0,"Cable","PC4");
-        PC pc5 = new PC("192.168.1.1","192.168.1.4",5.0,60.0,"Cable","PC5");
-        PC pc6 = new PC("192.168.1.2","192.168.1.4",10.0,60.0,"Cable","PC6");
-        Switch sw2 = new Switch("192.168.1.4","192.168.0.254",2.0,60.0,"Cable","PC6");
-        Network net = new Network("test");
-        net.AddPathElement(pc1);
-        net.AddPathElement(pc2);
-        net.AddPathElement(pc3);
-        net.AddPathElement(pc4);
-        net.AddPathElement(pc5);
-        net.AddPathElement(pc6);
-        net.AddPathElement(sw1);
-        net.AddPathElement(sw2);
-        net.AddPathElement(r1);
-        System.out.println("______________________________________________");
-        ArrayList<PathElement> path =(ArrayList<PathElement>) NetworkTest.getPathByDelay(pc3,pc6,net);
-        for (int i=path.size();i>0;i--)
-        {
-            System.out.print(((ActiveElement)path.get(i-1)).getIp().toString()+"-" +((ActiveElement)path.get(i-1)).getID() + " ");
-        }
-        System.out.println();
-        System.out.println("______________________________________________");
-        path = (ArrayList<PathElement>) NetworkTest.getPath(pc3,pc6,net);
-        for (int i=path.size();i>0;i--)
-        {
-            System.out.print(((ActiveElement)path.get(i-1)).getIp().toString()+"-" +((ActiveElement)path.get(i-1)).getID() + " ");
-        }
     }
 }

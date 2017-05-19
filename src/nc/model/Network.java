@@ -1,4 +1,6 @@
-package NC.Model;
+package nc.model;
+
+import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,7 +8,7 @@ import java.util.Map;
 /**
  * Created by samok on 20.04.2017.
  */
-public class Network {
+public class Network  {
     protected HashMap<Integer, PathElement> PathElements = new HashMap<>();
     private String name;
 
@@ -14,7 +16,7 @@ public class Network {
     }
 
     public Network(String name) {
-        this.name = name;
+        setName(name.toLowerCase());
     }
 
     public String getName() {
@@ -23,7 +25,8 @@ public class Network {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if(name == null)throw new IllegalArgumentException();
+        else this.name = name;
     }
 
     public void AddPathElement(PathElement element) {

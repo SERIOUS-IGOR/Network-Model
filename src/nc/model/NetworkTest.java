@@ -1,4 +1,4 @@
-package NC.Model;
+package nc.model;
 
 import java.util.*;
 

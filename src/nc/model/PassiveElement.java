@@ -1,6 +1,4 @@
-package NC.Model;
-
-import java.util.Collection;
+package nc.model;
 
 /**
  * Created by samok on 26.04.2017.
@@ -22,8 +20,7 @@ public class PassiveElement implements PathElement{
         return cloneCost;
     }
 
-    @Override
-    public String getInfo() {
+    public String getName() {
         return null;
     }
 
