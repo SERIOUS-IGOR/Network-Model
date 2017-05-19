@@ -15,7 +15,7 @@ public class Controller {
         put("delete","delete [network/element] - deleting of exist network or elements;");
         put("create network","create network [name] - Creating new network with name \"name\"");
         put("delete network","delete network [name] - deliting network with name \"name\"");
-        put("findRoute [ip1 ip2 NetworkName]","find route [ip1 ip2 NetworkName - finding route between ip1 and ip2 in \"NetworkName\" network");
+        put("findRoute","find route [ip1 ip2 NetworkName - finding route between ip1 and ip2 in \"NetworkName\" network");
         put("add","add [element NetworkName] - adding \"element\" element to \"NetworkName\" network");
         put("exit","this is the end");
         put("help", "help [ /create[network/element] / delete[network/element] / info / findRoute/ add / exit]\n"+
