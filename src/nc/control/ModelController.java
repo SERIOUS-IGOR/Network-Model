@@ -11,11 +11,10 @@ import java.util.HashMap;
 public interface ModelController {
     public void start();
     public String[] getHelp();
-    public String getComandHelp (String command);
-    public String createNetwork();
-    public String createPC();
-    public String createSwitch();
-    public String createRouter();
-    public String deleteElementFromNetwork(String pcIP, String netName);
+    public void createNetwork();
+    public void createPC();
+    public void createSwitch();
+    public void createRouter();
+    public void deleteElementFromNetwork();
     public String addElement(ActiveElement elem, Network net);
 }

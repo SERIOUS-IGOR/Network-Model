@@ -15,6 +15,7 @@ public class Networks {
         if(!networks.containsKey(name)){
             try {
                 Network net = new Network(name);
+                networks.put(networksIterator++,net);
             }
             catch (IllegalArgumentException e){return "Invalid name";}
             return "Network with name \""+name+ "\" already exist";

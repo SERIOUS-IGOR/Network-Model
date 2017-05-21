@@ -62,130 +62,203 @@ public class Controller implements ModelController {
         String command = input.nextLine();
         while (!command.toLowerCase().equals("exit")) {
             if(help.containsKey(command.toLowerCase())){
-                model.setOutput("ITS WORKING");
+                switch (command){
+                    case("create pc"):{
+                        createPC();
+                    }
+                    case("create switch"):{
+                        createSwitch();
+                    }
+                    case("create router"):{
+                        createRouter();
+                    }
+                    case("create network"):{
+                        createNetwork();
+                    }
+                    case("delete element"):{
+                        deleteElementFromNetwork();
+                    }
+                    case("delete network"):{
+
+                    }
+                    case("info"):{
+
+                    }
+                    case("findroutebycost"):{
+
+                    }
+                    case("findroutebydelay"):{
+
+                    }
+                    case("findroute"):{
+
+                    }
+                    case("help"):{
+
+                    }
+                    case("exit"):{
+                        break;
+                    }
+                }
             }
-            command = input.nextLine();
+            if(!command.equals("exit"))command = input.nextLine();
         }
         System.out.println("exiting. . .\n Have a nice day!");
     }
 
     @Override
-    public String getComandHelp(String command) {
-        if (help.containsKey(command)) {
-            return help.get(command);
-        } else return "Unknown comand: " + command;
-    }
-
-    @Override
-    public String createNetwork() {
+    public void createNetwork() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Input network name: ");
+        model.setOutput("Input network name: ");
         String name = input.nextLine();
-        System.out.println();
-        if (Networks.doesNetworkExist(name)) return "Network with name \"" + name + "\" already exist";
-        else {
-            String result = Networks.createNetwork(name);
-            return result;
+        model.setOutput("\n");
+        boolean flag = true;
+        while (flag) {
+            String netName = input.nextLine();
+            if (netName.equals("cancel")) {
+                model.setOutput("canceled");
+            }
+            else if (Networks.doesNetworkExist(name)) {
+                model.setOutput("Network with name \"" + name + "\" already exist");
+            }
+            else {
+                model.setOutput(Networks.createNetwork(name));
+            }
         }
     }
 
     @Override
-    public String createPC() {
+    public void createPC() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Input PC IP, example: 192.168.0.1");
+        model.setOutput("Input PC IP, example: 192.168.0.1");
         String ip = input.nextLine();
-        System.out.print("Input PC default gateway IP, example: 192.168.0.1");
+        model.setOutput("Input PC default gateway IP, example: 192.168.0.1");
         String def = input.nextLine();
-        System.out.println("Input PC cost, example: 10,0");
+        model.setOutput("Input PC cost, example: 10.0");
         String cost = input.nextLine();
-        System.out.println("Input PC delay, example: 65,0");
+        model.setOutput("Input PC delay, example: 65.0");
         String delay = input.nextLine();
-        System.out.println("Input type of connection (Cable or hub");
+        model.setOutput("Input type of connection (Cable or hub");
         String type = input.nextLine();
-        System.out.println("Input name for new PC, example: \"HomePC\"");
+        model.setOutput("Input name for new PC, example: \"HomePC\"");
         String name = input.nextLine();
         try {
             PC pc = new PC(ip, def, Double.parseDouble(cost), Double.parseDouble(delay), type, name);
-            System.out.println("You must add new element to any network. Input network name: ");
-            String netName = input.nextLine();
-            if (Networks.doesNetworkExist(netName)) {
-                addElement(pc, Networks.getNetwork(netName));
-            } else return "This network doesn't exist, try again";
+            model.setOutput("PC was successfully created");
+            model.setOutput("You must add new element to any network. Input network name: ");
+            boolean flag = true;
+            while (flag) {
+                String netName = input.nextLine();
+                if(netName.equals("cancel")){
+                    break;
+                }
+                if (Networks.doesNetworkExist(netName)) {
+                    addElement(pc, Networks.getNetwork(netName));
+                    model.setOutput("PC was successfully added to Network " + netName);
+                    flag = false;
+                } else model.setOutput("This network doesn't exist, try again or write \"cancel\" to cancel creating PC");
+            }
 
         } catch (IllegalArgumentException e) {
-            return e.getMessage();
+           model.setOutput(e.getMessage());
         }
-        return "PC was successfully created";
     }
 
     @Override
-    public String createSwitch() {
+    public void createSwitch() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Input Switch IP, example: 192.168.0.1");
+        model.setOutput("Input Switch IP, example: 192.168.0.1");
         String ip = input.nextLine();
-        System.out.print("Input Switch default gateway IP, example: 192.168.0.1");
+        model.setOutput("Input Switch default gateway IP, example: 192.168.0.1");
         String def = input.nextLine();
-        System.out.println("Input Switch cost, example: 10,0");
+        model.setOutput("Input Switch cost, example: 10.0");
         String cost = input.nextLine();
-        System.out.println("Input Switch delay, example: 65,0");
+        model.setOutput("Input Switch delay, example: 65.0");
         String delay = input.nextLine();
-        System.out.println("Input type of connection (Cable or hub");
+        model.setOutput("Input type of connection (Cable or hub");
         String type = input.nextLine();
-        System.out.println("Input name for new Switch, example: \"HomeSwitch\"");
+        model.setOutput("Input name for new Switch, example: \"HomeSwitch\"");
         String name = input.nextLine();
         try {
             Switch swit = new Switch(ip, def, Double.parseDouble(cost), Double.parseDouble(delay), type, name);
-            System.out.println("You must add new element to any network. Input network name: ");
-            String netName = input.nextLine();
-            if (Networks.doesNetworkExist(netName)) {
-                addElement(swit, Networks.getNetwork(netName));
-            } else return "This network doesn't exist, try again";
+            model.setOutput("Switch was successfully created");
+            model.setOutput("You must add new element to any network. Input network name: ");
+            boolean flag = true;
+            while (flag) {
+                String netName = input.nextLine();
+                if(netName.equals("cancel")){
+                    break;
+                }
+                if (Networks.doesNetworkExist(netName)) {
+                    addElement(swit, Networks.getNetwork(netName));
+                    model.setOutput("Switch was successfully added to Network " + netName);
+                    flag = false;
+                } else model.setOutput("This network doesn't exist, try again or write \"cancel\" to cancel creating Switch");
+            }
 
         } catch (IllegalArgumentException e) {
-            return e.getMessage();
+            model.setOutput(e.getMessage());
         }
-        return "Switch was successfully created";
     }
 
     @Override
-    public String createRouter() {
+    public void createRouter() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Input Router IP, example: 192.168.0.1");
+        model.setOutput("Input Router IP, example: 192.168.0.1");
         String ip = input.nextLine();
-        System.out.print("Input Router default gateway IP, example: 192.168.0.1");
+        model.setOutput("Input Router default gateway IP, example: 192.168.0.1");
         String def = input.nextLine();
-        System.out.println("Input Router cost, example: 10,0");
+        model.setOutput("Input Router cost, example: 10.0");
         String cost = input.nextLine();
-        System.out.println("Input Router delay, example: 65,0");
+        model.setOutput("Input Router delay, example: 65.0");
         String delay = input.nextLine();
-        System.out.println("Input type of connection (Cable or hub");
+        model.setOutput("Input type of connection (Cable or hub");
         String type = input.nextLine();
-        System.out.println("Input name for new Router, example: \"HomeRouter\"");
+        model.setOutput("Input name for new Router, example: \"HomeRouter\"");
         String name = input.nextLine();
         try {
             Router router = new Router(ip, def, Double.parseDouble(cost), Double.parseDouble(delay), type, name);
-            System.out.println("You must add new element to any network. Input network name: ");
-            String netName = input.nextLine();
-            if (Networks.doesNetworkExist(netName)) {
-                addElement(router, Networks.getNetwork(netName));
-            } else return "This network doesn't exist, try again";
+            model.setOutput("Router was successfully created");
+            model.setOutput("You must add new element to any network. Input network name: ");
+            boolean flag = true;
+            while (flag) {
+                String netName = input.nextLine();
+                if(netName.equals("cancel")){
+                    break;
+                }
+                if (Networks.doesNetworkExist(netName)) {
+                    addElement(router, Networks.getNetwork(netName));
+                    model.setOutput("Router was successfully added to Network " + netName);
+                    flag = false;
+                } else model.setOutput("This network doesn't exist, try again or write \"cancel\" to cancel creating Router");
+            }
 
         } catch (IllegalArgumentException e) {
-            return e.getMessage();
+            model.setOutput(e.getMessage());
         }
-        return "Router was successfully created";
     }
 
     @Override
-    public String deleteElementFromNetwork(String elementIp, String netName) {
+    public void deleteElementFromNetwork() {
+        Scanner input = new Scanner(System.in);
+        boolean flag = true;
+        while (flag) {
+            model.setOutput("Input element IP, example: 192.168.0.1");
+            String elementIp = input.nextLine();
+            model.setOutput("network name");
+            String netName = input.nextLine();
+            if(netName.equals("cancel")){
+                break;
+            }
+            if (Networks.doesNetworkExist(netName)) {
         Network net = Networks.getNetwork(netName);
         if (net != null) {
             int i = net.containsIP(elementIp);
             if (i > 0) {
                 net.deletePathElement(net.getNetworkElement(i));
-                return "Element with IP:" + elementIp + " was successfully deleted from Network: " + netName;
-            } else return "IP is not in this Network";
-        } else return "This network does not exist";
+                model.setOutput("Element with IP:" + elementIp + " was successfully deleted from Network: " + netName);
+            } else model.setOutput("IP is not in this Network");
+        } else model.setOutput("This network does not exist");
     }
 
     @Override

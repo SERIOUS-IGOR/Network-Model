@@ -14,7 +14,7 @@ public class ActiveElement implements PathElement {
     private String name = null;
     private static int idIterator=1;
     private int ID=idIterator;
-    private String connectedOver = "Cable";
+    private String connectedOver;
     protected ActiveElement() {
         idIterator++;
     }
