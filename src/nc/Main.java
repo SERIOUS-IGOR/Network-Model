@@ -3,6 +3,7 @@ import nc.control.*;
 import nc.model.*;
 import nc.view.*;
 
+import javax.swing.text.View;
 import java.util.Scanner;
 
 /**
@@ -10,11 +11,10 @@ import java.util.Scanner;
  */
 public class Main {
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        String command = input.nextLine();
-        while (!command.toLowerCase().equals("exit")) {
-
-        }
-        System.out.println("exiting. . .\n Have a nice day!");
+        ModelOutput model = new ModelOutput();
+        Controller cont = new Controller(model);
+        NetView view = new NetView(model);
+        model.addObserver(view);
+        cont.start();
     }
 }

@@ -7,7 +7,7 @@ public class PC extends ActiveElement {
     public PC() {
     }
 
-    protected PC(String ip,
+    public PC(String ip,
                  String defaultGateway,
                  double cost,
                  double timeDelay,

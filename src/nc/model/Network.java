@@ -29,11 +29,11 @@ public class Network  {
         else this.name = name;
     }
 
-    public void AddPathElement(PathElement element) {
+    public void addPathElement(PathElement element) {
         PathElements.put(element.getID(), element);
     }
 
-    public void DeletePathElement(PathElement element) {
+    public void deletePathElement(PathElement element) {
         PathElements.remove(element.getID(), element);
     }
 
@@ -52,5 +52,17 @@ public class Network  {
             }
         }
         return 0;
+    }
+    public int containsIP(String findIP) {
+        for (Map.Entry entry : PathElements.entrySet()) {
+            if (((ActiveElement) entry.getValue()).getIp().toString().equals(findIP)) {
+                return (int) entry.getKey();
+            }
+        }
+        return 0;
+    }
+    public ActiveElement getNetworkElement(int id){
+        ActiveElement ae =(ActiveElement) PathElements.get(id);
+        return ae;
     }
 }

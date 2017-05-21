@@ -96,6 +96,10 @@ public class ActiveElement implements PathElement {
        return cost;
     }
 
+    public void setConnectedOver(String connectedOver) {
+        this.connectedOver = connectedOver;
+    }
+
     public ArrayList<PathElement> getConnections(Network net) {
         if(net.containsIP(ip)<0)throw new IllegalArgumentException(
                 "This element is not connected to \"" +
