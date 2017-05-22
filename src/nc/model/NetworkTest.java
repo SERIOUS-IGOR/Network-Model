@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Created by samok on 01.05.2017.
  */
- class NetworkTest extends Network {
+ public class NetworkTest extends Network {
 
 
     static int[][] netMatrix(Network testNet) {
@@ -75,7 +75,7 @@ import java.util.*;
         System.out.println("__________________________");
     }
 
-    static Collection<PathElement> getPath(ActiveElement start, ActiveElement end, Network net) {
+    public static Collection<PathElement> getPath(Network net, ActiveElement start, ActiveElement end) {
         if ((net.containsIP(start.getIp()) == 0 | net.containsIP(end.getIp()) == 0) ||
                 (net.containsIP(start.getIp()) == 0 || net.containsIP(end.getIp()) == 0))
             throw new RouteNotFoundExeption("This elements is in difference networks");
@@ -101,10 +101,11 @@ import java.util.*;
             return Path;
         }
     }
-    static Collection<PathElement> getPathByCost(ActiveElement start, ActiveElement end, Network net) {
+    public static Collection<PathElement> getPathByCost(Network net, ActiveElement start, ActiveElement end) {
         if ((net.containsIP(start.getIp()) == 0 | net.containsIP(end.getIp()) == 0) ||
                 (net.containsIP(start.getIp()) == 0 || net.containsIP(end.getIp()) == 0))
-            throw new RouteNotFoundExeption("This elements is in difference networks");
+            throw new RouteNotFoundExeption("This elements not in one Network");
+        else if(start==end)throw new RouteNotFoundExeption("Start point = and point");
         else {
             double[][] matrix = netMatrixByCost(net);
             HelpNode resultArr[]= getArcsByMatrix(matrix,start,end);
@@ -127,7 +128,7 @@ import java.util.*;
             return Path;
         }
     }
-    static Collection<PathElement> getPathByDelay(ActiveElement start, ActiveElement end, Network net) {
+    public static Collection<PathElement> getPathByDelay(Network net, ActiveElement start, ActiveElement end) {
         if ((net.containsIP(start.getIp()) == 0 | net.containsIP(end.getIp()) == 0) ||
                 (net.containsIP(start.getIp()) == 0 || net.containsIP(end.getIp()) == 0))
             throw new RouteNotFoundExeption("This elements is in difference networks");

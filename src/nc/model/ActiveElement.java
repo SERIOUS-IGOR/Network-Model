@@ -19,24 +19,19 @@ public class ActiveElement implements PathElement {
         idIterator++;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+
 
     protected ActiveElement(String ip,
                             String defaultGateway,
                             double cost,
                             double timeDelay,
                             String connectedOver,
-                            String name){
+                            String name) {
         setIP(ip);
         setDefaultGateway(defaultGateway);
         setCost(cost);
         setTimeDelay(timeDelay);
-        if(connectedOver.toLowerCase().equals("cable")||connectedOver.toLowerCase().equals("hub")){
-            this.connectedOver=connectedOver;
-        }
-        else throw new IllegalArgumentException("WTF MAN");
+        setConnectedOver(connectedOver);
         setName(name);
         idIterator++;
     }
@@ -62,7 +57,9 @@ public class ActiveElement implements PathElement {
         this.ip = ip;
     }
     public void setIP(String textIP) {
-        this.ip = new IPadress(textIP);
+        if(IPadress.isIpCorrect(textIP)) {
+            this.ip = new IPadress(textIP);
+        }
     }
 
 
@@ -76,14 +73,18 @@ public class ActiveElement implements PathElement {
     }
 
     public void setDefaultGateway(String textIP) {
-        this.defaultGateway = new IPadress(textIP);
+        if(IPadress.isIpCorrect(textIP)){
+            this.defaultGateway = new IPadress(textIP);
+        }
     }
     public void setCost(double cost) {
-        this.cost = cost;
+        if(cost<0)throw new IllegalArgumentException("Incorrect cost: "+cost);
+        else this.cost = cost;
     }
 
     public void setTimeDelay(double timeDelay) {
-        this.timeDelay = timeDelay;
+        if(timeDelay<0)throw new IllegalArgumentException("Incorrect cost: "+cost);
+        else this.timeDelay = timeDelay;
     }
 
     @Override
@@ -97,7 +98,11 @@ public class ActiveElement implements PathElement {
     }
 
     public void setConnectedOver(String connectedOver) {
-        this.connectedOver = connectedOver;
+        if (connectedOver.toLowerCase().equals("cable") ||
+                connectedOver.toLowerCase().equals("hub")) {
+            this.connectedOver = connectedOver;
+        }
+        else throw new IllegalArgumentException("Incorrect connection type: "+ connectedOver);
     }
 
     public ArrayList<PathElement> getConnections(Network net) {
@@ -118,6 +123,13 @@ public class ActiveElement implements PathElement {
             }
             return connections;
         }
+    }
+
+    public void setName(String name) {
+        if(name==null)throw new IllegalArgumentException("Incorrect name: name cant be null");
+        else if(name.length()<4)throw new IllegalArgumentException("Incorrect name: "+ name+", name must be longer than 4 characters");
+        else if(name.contains(" "))throw new IllegalArgumentException("Incorrect name: "+ name+ ", name cant contain spaces");
+        else this.name=name;
     }
 
     public String getName() {

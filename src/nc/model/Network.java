@@ -25,8 +25,10 @@ public class Network  {
     }
 
     public void setName(String name) {
-        if(name == null)throw new IllegalArgumentException();
-        else this.name = name;
+        if(name==null)throw new IllegalArgumentException("Incorrect name: name cant be null");
+        else if(name.length()<4)throw new IllegalArgumentException("Incorrect name: "+ name+", name must be longer than 4 characters");
+        else if(name.contains(" "))throw new IllegalArgumentException("Incorrect name: "+ name+ ", name cant contain spaces");
+        else this.name=name;
     }
 
     public void addPathElement(PathElement element) {
@@ -34,14 +36,9 @@ public class Network  {
     }
 
     public void deletePathElement(PathElement element) {
-        PathElements.remove(element.getID(), element);
-    }
-
-    public void printPathElements() {
-        for (Map.Entry entry : PathElements.entrySet()) {
-            System.out.println(entry.getKey() + " "
-                    + entry.getValue());
-        }
+        if (PathElements.containsValue(element)) {
+            PathElements.remove(element.getID(), element);
+        }else throw  new IllegalArgumentException("No such element in this Network");
     }
 
     public int containsIP(IPadress findIP) {
@@ -62,7 +59,7 @@ public class Network  {
         return 0;
     }
     public ActiveElement getNetworkElement(int id){
-        ActiveElement ae =(ActiveElement) PathElements.get(id);
-        return ae;
+        if(PathElements.get(id)!=null)return (ActiveElement)PathElements.get(id);
+        else throw new IllegalArgumentException("No such element in Network");
     }
 }

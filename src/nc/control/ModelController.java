@@ -9,12 +9,17 @@ import java.util.HashMap;
  * Created by samok on 20.05.2017.
  */
 public interface ModelController {
-    public void start();
-    public String[] getHelp();
-    public void createNetwork();
-    public void createPC();
-    public void createSwitch();
-    public void createRouter();
-    public void deleteElementFromNetwork();
-    public String addElement(ActiveElement elem, Network net);
+    void start();
+    String[] getHelp();
+    void createNetwork();
+    void createPC();
+    void createSwitch();
+    void createRouter();
+    void deleteElementFromNetwork();
+    String addElement(ActiveElement elem, Network net);
+    void deleteNetwork();
+    void info();
+    void findRouteByCost();
+    void findRouteByDelay();
+    void findRoute();
 }

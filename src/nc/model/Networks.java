@@ -46,13 +46,12 @@ public class Networks {
                 return (Network) entry.getValue();
             }
         }
-        return null;
+        throw new IllegalArgumentException("No such Network");
     }
-    static public boolean deleteNetwork(String name){
+    static public void deleteNetwork(String name){
         if(Networks.doesNetworkExist(name)){
             networks.remove(name,networks.get(name));
-            return true;
         }
-        else return false;
+        else throw new IllegalArgumentException("No such network");
     }
 }

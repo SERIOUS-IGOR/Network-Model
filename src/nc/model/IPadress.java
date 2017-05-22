@@ -24,4 +24,14 @@ public class IPadress implements Cloneable {
         String another = ip;
         return another;
     }
+    public static boolean isIpCorrect(String ip){
+        if(ip==null)throw new IllegalArgumentException("Incorrecr IP: IP cant be null");
+        String[] temp = ip.split(".");
+        if(temp.length>4||temp.length<0)throw new IllegalArgumentException("Incorrect IP: "+ip);
+        for (String str:temp
+             ) {
+            if(Integer.parseInt(str)>254|| Integer.parseInt(str)<=0)throw new IllegalArgumentException("Incorrect IP: "+ip);
+        }
+        return true;
+    }
 }
