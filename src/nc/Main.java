@@ -3,10 +3,6 @@ import nc.control.*;
 import nc.model.*;
 import nc.view.*;
 
-import javax.swing.text.Document;
-import javax.swing.text.View;
-import java.util.Scanner;
-
 /**
  * Created by samok on 17.05.2017.
  */
