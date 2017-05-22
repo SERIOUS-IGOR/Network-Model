@@ -27,10 +27,11 @@ public class IPadress implements Cloneable {
     public static boolean isIpCorrect(String ip){
         if(ip==null)throw new IllegalArgumentException("Incorrecr IP: IP cant be null");
         String[] temp = ip.split(".");
-        if(temp.length>4||temp.length<0)throw new IllegalArgumentException("Incorrect IP: "+ip);
+        if(temp.length!=4)throw new IllegalArgumentException("Incorrect IP: "+ip);
+        if(temp[0].equals(0))throw new IllegalArgumentException("Incorrect IP: "+ip+", IP cant start with 0");
         for (String str:temp
              ) {
-            if(Integer.parseInt(str)>254|| Integer.parseInt(str)<=0)throw new IllegalArgumentException("Incorrect IP: "+ip);
+            if(Integer.parseInt(str)>254|| Integer.parseInt(str)<0)throw new IllegalArgumentException("Incorrect IP: "+ip);
         }
         return true;
     }
