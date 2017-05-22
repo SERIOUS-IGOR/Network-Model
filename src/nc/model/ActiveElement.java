@@ -43,7 +43,7 @@ public class ActiveElement implements PathElement {
                 "IP:" + this.getIp(),
                 "default gateway: " + this.getDefaultGateway(),
                 "cost: " + this.getCost(),
-                "delay: "+ this.getTimeDelay(),
+                "delay: "+ this.getDelay(),
                 "connected over: " + this.connectedOver.getClass().getSimpleName()
         };
         return info;
@@ -87,8 +87,7 @@ public class ActiveElement implements PathElement {
         else this.timeDelay = timeDelay;
     }
 
-    @Override
-    public double getTimeDelay() {
+    public double getDelay() {
         return timeDelay;
     }
 
@@ -150,7 +149,7 @@ public class ActiveElement implements PathElement {
         else return getCost()+Hub.cost;
     }
     public double getFullDelay(){
-        if (connectedOver.equals("cable"))return getTimeDelay()+Cable.delay;
-        else return getTimeDelay()+Hub.delay;
+        if (connectedOver.equals("cable"))return getDelay()+Cable.delay;
+        else return getDelay()+Hub.delay;
     }
 }

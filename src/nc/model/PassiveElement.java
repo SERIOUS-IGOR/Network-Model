@@ -4,20 +4,15 @@ package nc.model;
  * Created by samok on 26.04.2017.
  */
 public class PassiveElement implements PathElement{
-    double Cost = 0.0;
-    double TimeDelay = 0.0;
-    String info = "No information detected";
-
-    @Override
-    public double getTimeDelay() {
-        double cloneTimeDelay = TimeDelay;
-        return cloneTimeDelay;
+    double cost;
+    double delay;
+    public double getDelay() {
+        return delay;
     }
 
     @Override
     public double getCost() {
-        double cloneCost=Cost;
-        return cloneCost;
+        return cost;
     }
 
     public String getName() {
