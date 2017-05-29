@@ -3,6 +3,11 @@ package nc.control;
 import java.util.*;
 
 import nc.model.*;
+import nc.model.Active.ActiveElement;
+import nc.model.Active.*;
+import nc.model.Exeptions.RouteNotFoundExeption;
+import nc.model.Network.*;
+import static nc.control.StringConsts.*;
 
 /**
  * Created by samok on 17.05.2017.
@@ -10,18 +15,18 @@ import nc.model.*;
 public class Controller implements ModelController {
     private ModelOutput model;
     private HashMap<String, String> help = new HashMap<String, String>() {{
-        put("create pc", "Creating new element PC, you will asked for parametrs after this command");
-        put("create switch", "Creating new element switch, you will asked for parametrs after this command");
-        put("create router", "Creating new element router, you will asked for parametrs after this command");
-        put("create network", "Creating new network, you will asked for parametrs after this command");
-        put("delete element", "deletining element from network");
-        put("delete network", "deleting network");
-        put("info", "info get all information about element such as IP, cost, delay etc.");
-        put("findroutebycost", "finding route between ip1 and ip2 in \"NetworkName\" network by cost of elements");
-        put("findroutebydelay", "finding route between ip1 and ip2 in \"NetworkName\" network by delay of elements");
-        put("findroute", "finding route between ip1 and ip2 in \"NetworkName\" network");
-        put("exit", "this is the end");
-        put("help", "help [ /create[network/element] / delete[network/element] / info / findRoute/ add / exit]\n" +
+        put(CREATE_PC, "Creating new element PC, you will asked for parametrs after this command");
+        put(CREATE_SWITCH, "Creating new element switch, you will asked for parametrs after this command");
+        put(CREATE_ROUTER, "Creating new element router, you will asked for parametrs after this command");
+        put(CREATE_NETWORK, "Creating new network, you will asked for parametrs after this command");
+        put(DELETE_ELEMENT, "deletining element from network");
+        put(DELETE_NETWORK, "deleting network");
+        put(INFO, "info get all information about element such as IP, cost, delay etc.");
+        put(FIND_COST, "finding route between ip1 and ip2 in \"NetworkName\" network by cost of elements");
+        put(FIND_DELAY, "finding route between ip1 and ip2 in \"NetworkName\" network by delay of elements");
+        put(FIND, "finding route between ip1 and ip2 in \"NetworkName\" network");
+        put(EXIT, "this is the end");
+        put(HELP, "help [ /create[network/element] / delete[network/element] / info / findRoute/ add / exit]\n" +
                 "see that message or help by any of command from help");
     }};
 
@@ -30,12 +35,12 @@ public class Controller implements ModelController {
     }
 
     @Override
-    public String[] getHelp() {
-        String[] help = new String[12];
+    public ArrayList<String> getHelp() {
+        ArrayList<String>  help = new ArrayList(12);
         int helpIterator = 0;
         for (Map.Entry entry : this.help.entrySet()
                 ) {
-            help[helpIterator++] = entry.getKey() + " - " + entry.getValue();
+            help.add(entry.getKey() + " - " + entry.getValue());
         }
         return help;
     }
@@ -60,60 +65,60 @@ public class Controller implements ModelController {
         }
         model.setOutput("Input command, type \"help\" to see help list");
         String command = input.nextLine();
-        while (!command.toLowerCase().equals("exit")) {
+        while (!EXIT.equals(command.toLowerCase())) {
             if (help.containsKey(command.toLowerCase())) {
                 switch (command) {
-                    case ("create pc"): {
+                    case (CREATE_PC): {
                         createPC();
                         break;
                     }
-                    case ("create switch"): {
+                    case (CREATE_SWITCH): {
                         createSwitch();
                         break;
                     }
-                    case ("create router"): {
+                    case (CREATE_ROUTER): {
                         createRouter();
                         break;
                     }
-                    case ("create network"): {
+                    case (CREATE_NETWORK): {
                         createNetwork();
                         break;
                     }
-                    case ("delete element"): {
+                    case (DELETE_ELEMENT): {
                         deleteElementFromNetwork();
                         break;
                     }
-                    case ("delete network"): {
+                    case (DELETE_NETWORK): {
                         deleteNetwork();
                         break;
                     }
-                    case ("info"): {
+                    case (INFO): {
                         info();
                         break;
                     }
-                    case ("findroutebycost"): {
+                    case (FIND_COST): {
                         findRouteByCost();
                         break;
                     }
-                    case ("findroutebydelay"): {
+                    case (FIND_DELAY): {
                         findRouteByDelay();
                         break;
                     }
-                    case ("findroute"): {
+                    case (FIND): {
                         findRoute();
                         break;
                     }
-                    case ("help"): {
+                    case (HELP): {
                         model.setOutput(getHelp());
                         break;
                     }
-                    case ("exit"): {
+                    case (EXIT): {
                         break;
                     }
                 }
             }
-            else model.setOutput("Unknown comand");
-            if (!command.equals("exit")) command = input.nextLine();
+            else model.setOutput("Unknown command");
+            if (!EXIT.equals(command)) command = input.nextLine();
         }
         System.out.println("exiting. . .\n Have a nice day!");
     }
@@ -127,7 +132,7 @@ public class Controller implements ModelController {
         boolean flag = true;
         while (flag) {
             String netName = input.nextLine();
-            if (netName.equals("cancel")) {
+            if (CANCEL.equals(netName)) {
                 model.setOutput("canceled");
             } else if (Networks.doesNetworkExist(name)) {
                 model.setOutput("Network with name \"" + name + "\" already exist");
@@ -159,7 +164,7 @@ public class Controller implements ModelController {
             boolean flag = true;
             while (flag) {
                 String netName = input.nextLine();
-                if (netName.equals("cancel")) {
+                if (CANCEL.equals(netName)) {
                     break;
                 }
                 if (Networks.doesNetworkExist(netName)) {
@@ -197,7 +202,7 @@ public class Controller implements ModelController {
             boolean flag = true;
             while (flag) {
                 String netName = input.nextLine();
-                if (netName.equals("cancel")) {
+                if (CANCEL.equals(netName)) {
                     break;
                 }
                 if (Networks.doesNetworkExist(netName)) {
@@ -235,7 +240,7 @@ public class Controller implements ModelController {
             boolean flag = true;
             while (flag) {
                 String netName = input.nextLine();
-                if (netName.equals("cancel")) {
+                if (CANCEL.equals(netName)) {
                     break;
                 }
                 if (Networks.doesNetworkExist(netName)) {
@@ -260,7 +265,7 @@ public class Controller implements ModelController {
             String ip = input.nextLine();
             model.setOutput("Input Network name");
             String netName = input.nextLine();
-            if(IPadress.isIpCorrect(ip)) {
+            if(IPaddress.isIpCorrect(ip)) {
                 try {
                     Network temp = Networks.getNetwork(netName);
                     temp.deletePathElement(temp.getNetworkElement(temp.containsIP(ip)));
@@ -269,10 +274,10 @@ public class Controller implements ModelController {
                     model.setOutput(e.getMessage());
                     model.setOutput("press Enter to try again or type \"cancel\" to cancel");
                     String cancel = input.nextLine();
-                    if (cancel.toLowerCase().equals("cancel")) flag = false;
+                    if (CANCEL.equals(cancel.toLowerCase()))flag = false;
                 }
             }
-            else model.setOutput("Incorrect IP adress");
+            else model.setOutput("Incorrect IP address");
         }
     }
 
@@ -288,7 +293,7 @@ public class Controller implements ModelController {
 
     @Override
     public void deleteNetwork() {
-        if (Networks.getNetworks().size() == 0) model.setOutput("There is nothing to delete");
+        if (Networks.getNetworks().isEmpty()) model.setOutput("There is nothing to delete");
         else if (Networks.getNetworks().size() == 1) model.setOutput("You can't delete last network");
         else {
             model.setOutput("Which network do you want to delete?");
@@ -301,7 +306,7 @@ public class Controller implements ModelController {
             while (flag) {
                 model.setOutput("Input network name or \"cancel\" to cancel");
                 String netName = input.nextLine();
-                if (netName.equals("cancel")) {
+                if (CANCEL.equals(netName)) {
                     break;
                 } else {
                     try {
@@ -333,7 +338,7 @@ public class Controller implements ModelController {
                 model.setOutput(e.getMessage());
                 model.setOutput("press Enter to try again or type \"cancel\" to cancel");
                 String cancel = input.nextLine();
-                if (cancel.toLowerCase().equals("cancel")) flag = false;
+                if (CANCEL.equals(cancel.toLowerCase())) flag = false;
             }
         }
     }
@@ -365,12 +370,12 @@ public class Controller implements ModelController {
                 model.setOutput(e.getMessage());
                 model.setOutput("press Enter to try again or type \"cancel\" to cancel");
                 String cancel = input.nextLine();
-                if (cancel.toLowerCase().equals("cancel")) flag = false;
+                if (CANCEL.equals(cancel.toLowerCase())) flag = false;
             } catch (RouteNotFoundExeption r) {
                 model.setOutput(r.getMessage());
                 model.setOutput("press Enter to try again or type \"cancel\" to cancel");
                 String cancel = input.nextLine();
-                if (cancel.toLowerCase().equals("cancel")) flag = false;
+                if (CANCEL.equals(cancel.toLowerCase())) flag = false;
             }
         }
     }
@@ -403,12 +408,12 @@ public class Controller implements ModelController {
                 model.setOutput(e.getMessage());
                 model.setOutput("press Enter to try again or type \"cancel\" to cancel");
                 String cancel = input.nextLine();
-                if (cancel.toLowerCase().equals("cancel")) flag = false;
+                if (CANCEL.equals(cancel.toLowerCase())) flag = false;
             } catch (RouteNotFoundExeption r) {
                 model.setOutput(r.getMessage());
                 model.setOutput("press Enter to try again or type \"cancel\" to cancel");
                 String cancel = input.nextLine();
-                if (cancel.toLowerCase().equals("cancel")) flag = false;
+                if (CANCEL.equals(cancel.toLowerCase())) flag = false;
             }
         }
     }
@@ -441,12 +446,12 @@ public class Controller implements ModelController {
                 model.setOutput(e.getMessage());
                 model.setOutput("press Enter to try again or type \"cancel\" to cancel");
                 String cancel = input.nextLine();
-                if (cancel.toLowerCase().equals("cancel")) flag = false;
+                if (CANCEL.equals(cancel.toLowerCase())) flag = false;
             } catch (RouteNotFoundExeption r) {
                 model.setOutput(r.getMessage());
                 model.setOutput("press Enter to try again or type \"cancel\" to cancel");
                 String cancel = input.nextLine();
-                if (cancel.toLowerCase().equals("cancel")) flag = false;
+                if (CANCEL.equals(cancel.toLowerCase())) flag = false;
             }
         }
     }

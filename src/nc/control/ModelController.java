@@ -1,16 +1,16 @@
 package nc.control;
 
-import nc.model.ActiveElement;
-import nc.model.Network;
+import nc.model.Active.ActiveElement;
+import nc.model.Network.Network;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  * Created by samok on 20.05.2017.
  */
 public interface ModelController {
     void start();
-    String[] getHelp();
+    ArrayList<String> getHelp();
     void createNetwork();
     void createPC();
     void createSwitch();

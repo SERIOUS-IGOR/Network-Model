@@ -1,14 +1,14 @@
-package nc.model;
+package nc.model.Network;
 
 /**
  * Created by samok on 17.04.2017.
  */
-public class IPadress implements Cloneable {
+public class IPaddress implements Cloneable {
     private String ip;
-    public IPadress(){
+    public IPaddress(){
         ip = "0.0.0.0";
     }
-    public IPadress(String ip){
+    public IPaddress(String ip){
         this.ip = ip;
     }
     public String getIp() {

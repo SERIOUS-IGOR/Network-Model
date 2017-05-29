@@ -1,11 +1,17 @@
-package nc.model;
+package nc.model.Passive;
+
+import nc.model.PathElement;
 
 /**
  * Created by samok on 26.04.2017.
  */
-public class PassiveElement implements PathElement{
-    double cost;
-    double delay;
+public class PassiveElement implements PathElement {
+    public PassiveElement(double cost,double delay){
+        this.cost = cost;
+        this.delay = delay;
+    }
+    private double cost;
+    private double delay;
     public double getDelay() {
         return delay;
     }

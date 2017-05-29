@@ -9,7 +9,7 @@ import java.util.List;
  * Created by samok on 21.05.2017.
  */
 public class ModelOutput implements Observerable {
-    private String[] output;
+    private ArrayList<String> output;
     private List<Observer> observers;
     public ModelOutput(){
         observers = new ArrayList<Observer>();
@@ -19,12 +19,13 @@ public class ModelOutput implements Observerable {
         if(o!=null)observers.add(o);
     }
 
-    public void setOutput(String[] output) {
+    public void setOutput(ArrayList<String> output) {
         this.output = output;
         notifyObservers();
     }
     public void setOutput(String output){
-        String[] convert = {output};
+        ArrayList<String> convert = new ArrayList<String>();
+        convert.add(output);
         this.output = convert;
         notifyObservers();
     }

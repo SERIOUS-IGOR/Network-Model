@@ -1,8 +1,10 @@
 package nc.view;
 
+import java.util.ArrayList;
+
 /**
  * Created by samok on 20.05.2017.
  */
 public interface ModelView {
-    public void printOutput(String[] output);
+    void printOutput(ArrayList<String> output);
 }

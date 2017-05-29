@@ -1,6 +1,7 @@
-package nc.model;
+package nc.model.Network;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
+import nc.model.Active.ActiveElement;
+import nc.model.PathElement;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +10,7 @@ import java.util.Map;
  * Created by samok on 20.04.2017.
  */
 public class Network  {
-    protected HashMap<Integer, PathElement> PathElements = new HashMap<>();
+    private HashMap<Integer, PathElement> PathElements = new HashMap<>();
     private String name;
 
     public Network() {
@@ -21,6 +22,11 @@ public class Network  {
 
     public String getName() {
         String other = name;
+        return other;
+    }
+
+    public HashMap<Integer, PathElement> getPathElements() {
+        HashMap<Integer,PathElement> other = new HashMap<>(PathElements);
         return other;
     }
 
@@ -41,7 +47,7 @@ public class Network  {
         }else throw  new IllegalArgumentException("No such element in this Network");
     }
 
-    public int containsIP(IPadress findIP) {
+    public int containsIP(IPaddress findIP) {
         String find = findIP.toString();
         for (Map.Entry entry : PathElements.entrySet()) {
             if (((ActiveElement) entry.getValue()).getIp().toString().equals(find)) {

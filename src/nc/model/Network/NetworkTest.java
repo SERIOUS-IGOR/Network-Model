@@ -1,4 +1,8 @@
-package nc.model;
+package nc.model.Network;
+
+import nc.model.Active.ActiveElement;
+import nc.model.PathElement;
+import nc.model.Exeptions.RouteNotFoundExeption;
 
 import java.util.*;
 
@@ -8,9 +12,10 @@ import java.util.*;
  public class NetworkTest extends Network {
 
 
-    static int[][] netMatrix(Network testNet) {
-        int[][] arr = new int[testNet.PathElements.size()][testNet.PathElements.size()];
-        Set<Map.Entry<Integer, PathElement>> setHelper = testNet.PathElements.entrySet();
+   public static int[][] netMatrix(Network testNet) {
+       HashMap<Integer,PathElement> pathElements = testNet.getPathElements();
+        int[][] arr = new int[pathElements.size()][pathElements.size()];
+        Set<Map.Entry<Integer, PathElement>> setHelper = pathElements.entrySet();
         int check;
         for (Map.Entry entry : setHelper) {
             check = testNet.containsIP(((ActiveElement) entry.getValue()).getDefaultGateway());
@@ -24,8 +29,9 @@ import java.util.*;
         return arr;
     }
     static double[][] netMatrixByCost(Network testNet) {
-        double[][] arr = new double[testNet.PathElements.size()][testNet.PathElements.size()];
-        Set<Map.Entry<Integer, PathElement>> setHelper = testNet.PathElements.entrySet();
+        HashMap<Integer,PathElement> pathElements = testNet.getPathElements();
+        double[][] arr = new double[pathElements.size()][pathElements.size()];
+        Set<Map.Entry<Integer, PathElement>> setHelper = pathElements.entrySet();
         int check;
         for (Map.Entry entry : setHelper) {
             check = testNet.containsIP(((ActiveElement) entry.getValue()).getDefaultGateway());
@@ -39,8 +45,9 @@ import java.util.*;
         return arr;
     }
     static double[][] netMatrixByDelay(Network testNet) {
-        double[][] arr = new double[testNet.PathElements.size()][testNet.PathElements.size()];
-        Set<Map.Entry<Integer, PathElement>> setHelper = testNet.PathElements.entrySet();
+        HashMap<Integer,PathElement> pathElements = testNet.getPathElements();
+        double[][] arr = new double[pathElements.size()][pathElements.size()];
+        Set<Map.Entry<Integer, PathElement>> setHelper = pathElements.entrySet();
         int check;
         for (Map.Entry entry : setHelper) {
             check = testNet.containsIP(((ActiveElement) entry.getValue()).getDefaultGateway());
@@ -75,12 +82,13 @@ import java.util.*;
         System.out.println("__________________________");
     }
 
-    public static Collection<PathElement> getPath(Network net, ActiveElement start, ActiveElement end) {
-        if ((net.containsIP(start.getIp()) == 0 | net.containsIP(end.getIp()) == 0) ||
-                (net.containsIP(start.getIp()) == 0 || net.containsIP(end.getIp()) == 0))
+    public static Collection<PathElement> getPath(Network testNet, ActiveElement start, ActiveElement end) {
+        HashMap<Integer,PathElement> pathElements = testNet.getPathElements();
+        if ((testNet.containsIP(start.getIp()) == 0 | testNet.containsIP(end.getIp()) == 0) ||
+                (testNet.containsIP(start.getIp()) == 0 || testNet.containsIP(end.getIp()) == 0))
             throw new RouteNotFoundExeption("This elements is in difference networks");
         else {
-            int[][] matrix = netMatrix(net);
+            int[][] matrix = netMatrix(testNet);
             HelpNode resultArr[]= getArcsByMatrix(matrix,start,end);
             int pathIndex=0;
             ArrayList<PathElement> Path = new ArrayList<>();
@@ -90,7 +98,7 @@ import java.util.*;
                 int i=0;
                 for(int j = i;j< resultArr.length;j++){
                     if(resultArr[j].getID()==Path.get(pathIndex).getID()){
-                        Path.add(++pathIndex,net.PathElements.get(resultArr[j].getParentID()));
+                        Path.add(++pathIndex,pathElements.get(resultArr[j].getParentID()));
                         if(Path.get(pathIndex).getID()==start.getID()){
                             flag=false;
                             break;
@@ -101,13 +109,14 @@ import java.util.*;
             return Path;
         }
     }
-    public static Collection<PathElement> getPathByCost(Network net, ActiveElement start, ActiveElement end) {
-        if ((net.containsIP(start.getIp()) == 0 | net.containsIP(end.getIp()) == 0) ||
-                (net.containsIP(start.getIp()) == 0 || net.containsIP(end.getIp()) == 0))
+    public static Collection<PathElement> getPathByCost(Network testNet, ActiveElement start, ActiveElement end) {
+        HashMap<Integer,PathElement> pathElements = testNet.getPathElements();
+        if ((testNet.containsIP(start.getIp()) == 0 | testNet.containsIP(end.getIp()) == 0) ||
+                (testNet.containsIP(start.getIp()) == 0 || testNet.containsIP(end.getIp()) == 0))
             throw new RouteNotFoundExeption("This elements not in one Network");
         else if(start==end)throw new RouteNotFoundExeption("Start point = and point");
         else {
-            double[][] matrix = netMatrixByCost(net);
+            double[][] matrix = netMatrixByCost(testNet);
             HelpNode resultArr[]= getArcsByMatrix(matrix,start,end);
             int pathIndex=0;
             ArrayList<PathElement> Path = new ArrayList<>();
@@ -117,7 +126,7 @@ import java.util.*;
                 int i=0;
                 for(int j = i;j< resultArr.length;j++){
                     if(resultArr[j].getID()==Path.get(pathIndex).getID()){
-                        Path.add(++pathIndex,net.PathElements.get(resultArr[j].getParentID()));
+                        Path.add(++pathIndex,pathElements.get(resultArr[j].getParentID()));
                         if(Path.get(pathIndex).getID()==start.getID()){
                             flag=false;
                             break;
@@ -128,12 +137,13 @@ import java.util.*;
             return Path;
         }
     }
-    public static Collection<PathElement> getPathByDelay(Network net, ActiveElement start, ActiveElement end) {
-        if ((net.containsIP(start.getIp()) == 0 | net.containsIP(end.getIp()) == 0) ||
-                (net.containsIP(start.getIp()) == 0 || net.containsIP(end.getIp()) == 0))
+    public static Collection<PathElement> getPathByDelay(Network testNet, ActiveElement start, ActiveElement end) {
+        HashMap<Integer,PathElement> pathElements = testNet.getPathElements();
+        if ((testNet.containsIP(start.getIp()) == 0 | testNet.containsIP(end.getIp()) == 0) ||
+                (testNet.containsIP(start.getIp()) == 0 || testNet.containsIP(end.getIp()) == 0))
             throw new RouteNotFoundExeption("This elements is in difference networks");
         else {
-            double[][] matrix = netMatrixByDelay(net);
+            double[][] matrix = netMatrixByDelay(testNet);
             HelpNode resultArr[]= getArcsByMatrix(matrix,start,end);
             int pathIndex=0;
             ArrayList<PathElement> Path = new ArrayList<>();
@@ -143,7 +153,7 @@ import java.util.*;
                 int i=0;
                 for(int j = i;j< resultArr.length;j++){
                     if(resultArr[j].getID()==Path.get(pathIndex).getID()){
-                        Path.add(++pathIndex,net.PathElements.get(resultArr[j].getParentID()));
+                        Path.add(++pathIndex,pathElements.get(resultArr[j].getParentID()));
                         if(Path.get(pathIndex).getID()==start.getID()){
                             flag=false;
                             break;

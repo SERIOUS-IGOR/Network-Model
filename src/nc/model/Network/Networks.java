@@ -1,6 +1,4 @@
-package nc.model;
-
-import com.sun.javaws.exceptions.InvalidArgumentException;
+package nc.model.Network;
 
 import java.util.HashMap;
 import java.util.Map;
