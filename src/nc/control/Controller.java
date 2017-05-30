@@ -3,10 +3,10 @@ package nc.control;
 import java.util.*;
 
 import nc.model.*;
-import nc.model.Active.ActiveElement;
-import nc.model.Active.*;
-import nc.model.Exeptions.RouteNotFoundExeption;
-import nc.model.Network.*;
+import nc.model.active.ActiveElement;
+import nc.model.active.*;
+import nc.model.exeptions.RouteNotFoundExeption;
+import nc.model.network.*;
 import static nc.control.StringConsts.*;
 
 /**
@@ -15,16 +15,16 @@ import static nc.control.StringConsts.*;
 public class Controller implements ModelController {
     private ModelOutput model;
     private HashMap<String, String> help = new HashMap<String, String>() {{
-        put(CREATE_PC, "Creating new element PC, you will asked for parametrs after this command");
-        put(CREATE_SWITCH, "Creating new element switch, you will asked for parametrs after this command");
-        put(CREATE_ROUTER, "Creating new element router, you will asked for parametrs after this command");
-        put(CREATE_NETWORK, "Creating new network, you will asked for parametrs after this command");
-        put(DELETE_ELEMENT, "deletining element from network");
+        put(CREATE_PC, "PC" + CREATING);
+        put(CREATE_SWITCH, "Switch" + CREATING);
+        put(CREATE_ROUTER, "Router" + CREATING);
+        put(CREATE_NETWORK, "network" + CREATING);
+        put(DELETE_ELEMENT, "deleting element from network");
         put(DELETE_NETWORK, "deleting network");
         put(INFO, "info get all information about element such as IP, cost, delay etc.");
-        put(FIND_COST, "finding route between ip1 and ip2 in \"NetworkName\" network by cost of elements");
-        put(FIND_DELAY, "finding route between ip1 and ip2 in \"NetworkName\" network by delay of elements");
-        put(FIND, "finding route between ip1 and ip2 in \"NetworkName\" network");
+        put(FIND_COST, FINDING +" by cost");
+        put(FIND_DELAY, FINDING +"  by delay");
+        put(FIND, FINDING);
         put(EXIT, "this is the end");
         put(HELP, "help [ /create[network/element] / delete[network/element] / info / findRoute/ add / exit]\n" +
                 "see that message or help by any of command from help");
@@ -60,7 +60,7 @@ public class Controller implements ModelController {
                 model.setOutput(e.getMessage());
                 model.setOutput("Try again");
             }
-            model.setOutput("Network was successfully created");
+            model.setOutput("network was successfully created");
             model.setOutput("\n");
         }
         model.setOutput("Input command, type \"help\" to see help list");
@@ -135,7 +135,7 @@ public class Controller implements ModelController {
             if (CANCEL.equals(netName)) {
                 model.setOutput("canceled");
             } else if (Networks.doesNetworkExist(name)) {
-                model.setOutput("Network with name \"" + name + "\" already exist");
+                model.setOutput("network with name \"" + name + "\" already exist");
             } else {
                 model.setOutput(Networks.createNetwork(name));
             }
@@ -145,17 +145,17 @@ public class Controller implements ModelController {
     @Override
     public void createPC() {
         Scanner input = new Scanner(System.in);
-        model.setOutput("Input PC IP, example: 192.168.0.1");
+        model.setOutput(INPUT_IP);
         String ip = input.nextLine();
-        model.setOutput("Input PC default gateway IP, example: 192.168.0.1");
+        model.setOutput("Default gateway " + INPUT_IP);
         String def = input.nextLine();
-        model.setOutput("Input PC cost, example: 10.0");
+        model.setOutput(INPUT_COST);
         String cost = input.nextLine();
-        model.setOutput("Input PC delay, example: 65.0");
+        model.setOutput(INPUT_DELAY);
         String delay = input.nextLine();
-        model.setOutput("Input type of connection (Cable or hub)");
+        model.setOutput(CONNECT_TYPE);
         String type = input.nextLine();
-        model.setOutput("Input name for new PC, example: \"HomePC\"");
+        model.setOutput(INPUT_NAME);
         String name = input.nextLine();
         try {
             PC pc = new PC(ip, def, Double.parseDouble(cost), Double.parseDouble(delay), type, name);
@@ -169,7 +169,7 @@ public class Controller implements ModelController {
                 }
                 if (Networks.doesNetworkExist(netName)) {
                     addElement(pc, Networks.getNetwork(netName));
-                    model.setOutput("PC was successfully added to Network " + netName);
+                    model.setOutput("PC was successfully added to network " + netName);
                     flag = false;
                 } else
                     model.setOutput("This network doesn't exist, try again or write \"cancel\" to cancel creating PC");
@@ -183,17 +183,17 @@ public class Controller implements ModelController {
     @Override
     public void createSwitch() {
         Scanner input = new Scanner(System.in);
-        model.setOutput("Input Switch IP, example: 192.168.0.1");
+        model.setOutput(INPUT_IP);
         String ip = input.nextLine();
-        model.setOutput("Input Switch default gateway IP, example: 192.168.0.1");
+        model.setOutput("Default gateway " + INPUT_IP);
         String def = input.nextLine();
-        model.setOutput("Input Switch cost, example: 10.0");
+        model.setOutput(INPUT_COST);
         String cost = input.nextLine();
-        model.setOutput("Input Switch delay, example: 65.0");
+        model.setOutput(INPUT_DELAY);
         String delay = input.nextLine();
-        model.setOutput("Input type of connection (Cable or hub)");
+        model.setOutput(CONNECT_TYPE);
         String type = input.nextLine();
-        model.setOutput("Input name for new Switch, example: \"HomeSwitch\"");
+        model.setOutput(INPUT_NAME);
         String name = input.nextLine();
         try {
             Switch swit = new Switch(ip, def, Double.parseDouble(cost), Double.parseDouble(delay), type, name);
@@ -207,7 +207,7 @@ public class Controller implements ModelController {
                 }
                 if (Networks.doesNetworkExist(netName)) {
                     addElement(swit, Networks.getNetwork(netName));
-                    model.setOutput("Switch was successfully added to Network " + netName);
+                    model.setOutput("Switch was successfully added to network " + netName);
                     flag = false;
                 } else
                     model.setOutput("This network doesn't exist, try again or write \"cancel\" to cancel creating Switch");
@@ -221,17 +221,17 @@ public class Controller implements ModelController {
     @Override
     public void createRouter() {
         Scanner input = new Scanner(System.in);
-        model.setOutput("Input Router IP, example: 192.168.0.1");
+        model.setOutput(INPUT_IP);
         String ip = input.nextLine();
-        model.setOutput("Input Router default gateway IP, example: 192.168.0.1");
+        model.setOutput("Default gateway " + INPUT_IP);
         String def = input.nextLine();
-        model.setOutput("Input Router cost, example: 10.0");
+        model.setOutput(INPUT_COST);
         String cost = input.nextLine();
-        model.setOutput("Input Router delay, example: 65.0");
+        model.setOutput(INPUT_DELAY);
         String delay = input.nextLine();
-        model.setOutput("Input type of connection (Cable or hub)");
+        model.setOutput(CONNECT_TYPE);
         String type = input.nextLine();
-        model.setOutput("Input name for new Router, example: \"HomeRouter\"");
+        model.setOutput(INPUT_NAME);
         String name = input.nextLine();
         try {
             Router router = new Router(ip, def, Double.parseDouble(cost), Double.parseDouble(delay), type, name);
@@ -245,7 +245,7 @@ public class Controller implements ModelController {
                 }
                 if (Networks.doesNetworkExist(netName)) {
                     addElement(router, Networks.getNetwork(netName));
-                    model.setOutput("Router was successfully added to Network " + netName);
+                    model.setOutput("Router was successfully added to network " + netName);
                     flag = false;
                 } else
                     model.setOutput("This network doesn't exist, try again or write \"cancel\" to cancel creating Router");
@@ -263,7 +263,7 @@ public class Controller implements ModelController {
         while (flag) {
             model.setOutput("Input element IP");
             String ip = input.nextLine();
-            model.setOutput("Input Network name");
+            model.setOutput("Input network name");
             String netName = input.nextLine();
             if(IPaddress.isIpCorrect(ip)) {
                 try {
@@ -287,7 +287,7 @@ public class Controller implements ModelController {
             return "Element with such IP already added in this network, try again with another IP";
         else {
             net.addPathElement(elem);
-            return "Element was successfully added to Network" + net.getName();
+            return "Element was successfully added to network" + net.getName();
         }
     }
 
@@ -311,7 +311,7 @@ public class Controller implements ModelController {
                 } else {
                     try {
                         Networks.deleteNetwork(netName);
-                        model.setOutput("Network was successfully deleted");
+                        model.setOutput("network was successfully deleted");
                     } catch (IllegalArgumentException e) {
                         model.setOutput(e.getMessage());
                     }
@@ -325,9 +325,9 @@ public class Controller implements ModelController {
         Scanner input = new Scanner(System.in);
         boolean flag = true;
         while (flag) {
-            model.setOutput("Input element IP");
+            model.setOutput(INPUT_IP);
             String ip = input.nextLine();
-            model.setOutput("Input Network name");
+            model.setOutput("Input network name");
             String netName = input.nextLine();
             try {
                 Network temp = Networks.getNetwork(netName);
@@ -348,11 +348,11 @@ public class Controller implements ModelController {
         Scanner input = new Scanner(System.in);
         boolean flag = true;
         while (flag) {
-            model.setOutput("Input first IP");
+            model.setOutput("First " +INPUT_IP);
             String ip1 = input.nextLine();
-            model.setOutput("Input second IP");
+            model.setOutput("Second " + INPUT_IP);
             String ip2 = input.nextLine();
-            model.setOutput("Input Network name");
+            model.setOutput("Input network name");
             String netName = input.nextLine();
             try {
                 Network temp = Networks.getNetwork(netName);
@@ -385,11 +385,11 @@ public class Controller implements ModelController {
         Scanner input = new Scanner(System.in);
         boolean flag = true;
         while (flag) {
-            model.setOutput("Input first IP");
+            model.setOutput("First " +INPUT_IP);
             String ip1 = input.nextLine();
-            model.setOutput("Input second IP");
+            model.setOutput("Second " + INPUT_IP);
             String ip2 = input.nextLine();
-            model.setOutput("Input Network name");
+            model.setOutput("Input network name");
             String netName = input.nextLine();
             try {
                 Network temp = Networks.getNetwork(netName);
@@ -423,11 +423,11 @@ public class Controller implements ModelController {
         Scanner input = new Scanner(System.in);
         boolean flag = true;
         while (flag) {
-            model.setOutput("Input first IP");
+            model.setOutput("First " +INPUT_IP);
             String ip1 = input.nextLine();
-            model.setOutput("Input second IP");
+            model.setOutput("Second " + INPUT_IP);
             String ip2 = input.nextLine();
-            model.setOutput("Input Network name");
+            model.setOutput("Input network name");
             String netName = input.nextLine();
             try {
                 Network temp = Networks.getNetwork(netName);

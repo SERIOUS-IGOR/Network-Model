@@ -1,4 +1,4 @@
-package nc.model.Passive;
+package nc.model.passive;
 
 /**
  * Created by samok on 13.05.2017.

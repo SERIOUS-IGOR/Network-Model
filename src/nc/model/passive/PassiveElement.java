@@ -1,4 +1,4 @@
-package nc.model.Passive;
+package nc.model.passive;
 
 import nc.model.PathElement;
 

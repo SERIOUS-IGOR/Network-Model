@@ -1,7 +1,7 @@
 package nc.control;
 
-import nc.model.Active.ActiveElement;
-import nc.model.Network.Network;
+import nc.model.active.ActiveElement;
+import nc.model.network.Network;
 
 import java.util.ArrayList;
 

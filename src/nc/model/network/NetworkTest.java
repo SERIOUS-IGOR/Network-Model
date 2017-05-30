@@ -1,8 +1,8 @@
-package nc.model.Network;
+package nc.model.network;
 
-import nc.model.Active.ActiveElement;
+import nc.model.active.ActiveElement;
 import nc.model.PathElement;
-import nc.model.Exeptions.RouteNotFoundExeption;
+import nc.model.exeptions.RouteNotFoundExeption;
 
 import java.util.*;
 
@@ -113,7 +113,7 @@ import java.util.*;
         HashMap<Integer,PathElement> pathElements = testNet.getPathElements();
         if ((testNet.containsIP(start.getIp()) == 0 | testNet.containsIP(end.getIp()) == 0) ||
                 (testNet.containsIP(start.getIp()) == 0 || testNet.containsIP(end.getIp()) == 0))
-            throw new RouteNotFoundExeption("This elements not in one Network");
+            throw new RouteNotFoundExeption("This elements not in one network");
         else if(start==end)throw new RouteNotFoundExeption("Start point = and point");
         else {
             double[][] matrix = netMatrixByCost(testNet);

@@ -1,11 +1,11 @@
-package nc.model.Active;
+package nc.model.active;
 
 import nc.model.*;
-import nc.model.Network.IPaddress;
-import nc.model.Network.Network;
-import nc.model.Network.NetworkTest;
-import nc.model.Passive.Cable;
-import nc.model.Passive.Hub;
+import nc.model.network.IPaddress;
+import nc.model.network.Network;
+import nc.model.network.NetworkTest;
+import nc.model.passive.Cable;
+import nc.model.passive.Hub;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -150,12 +150,12 @@ public class ActiveElement implements PathElement {
     }
 
     public double getFullCost() {
-        if (connectedOver.equals("cable")) return getCost() + Cable.getInstance().getCost();
+        if ("cable".equals(connectedOver)) return getCost() + Cable.getInstance().getCost();
         else return getCost() +Hub.getInstance().getCost();
     }
 
     public double getFullDelay() {
-        if (connectedOver.equals("cable")) return getDelay() + Cable.getInstance().getDelay();
+        if ("cable".equals(connectedOver)) return getDelay() + Cable.getInstance().getDelay();
         else return getDelay() + Hub.getInstance().getDelay();
     }
 

@@ -17,4 +17,11 @@ public class StringConsts {
     public static final String EXIT = "exit";
     public static final String HELP = "help";
     public static final String CANCEL = "cancel";
+    public static final String CREATING = "creating, you will asked for parameters after this command";
+    public static final String FINDING = "finding route between ip1 and ip2 in \"NetworkName\" network";
+    public static final String INPUT_IP = "IP input, example: 192.168.0.1";
+    public static final String INPUT_COST = "Input cost, example: 10";
+    public static final String INPUT_DELAY= "Input delay, example: 65";
+    public static final String INPUT_NAME ="Input name, example: \"Home\"";
+    public static final String CONNECT_TYPE =  "Input type of connection (Cable or hub)";
 }

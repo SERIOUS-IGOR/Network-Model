@@ -1,4 +1,4 @@
-package nc.model.Exeptions;
+package nc.model.exeptions;
 
 /**
  * Created by samok on 13.05.2017.

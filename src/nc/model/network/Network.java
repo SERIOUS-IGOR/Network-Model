@@ -1,6 +1,6 @@
-package nc.model.Network;
+package nc.model.network;
 
-import nc.model.Active.ActiveElement;
+import nc.model.active.ActiveElement;
 import nc.model.PathElement;
 
 import java.util.HashMap;
@@ -44,7 +44,7 @@ public class Network  {
     public void deletePathElement(PathElement element) {
         if (PathElements.containsValue(element)) {
             PathElements.remove(element.getID(), element);
-        }else throw  new IllegalArgumentException("No such element in this Network");
+        }else throw  new IllegalArgumentException("No such element in this network");
     }
 
     public int containsIP(IPaddress findIP) {
@@ -66,6 +66,6 @@ public class Network  {
     }
     public ActiveElement getNetworkElement(int id){
         if(PathElements.get(id)!=null)return (ActiveElement)PathElements.get(id);
-        else throw new IllegalArgumentException("No such element in Network");
+        else throw new IllegalArgumentException("No such element in network");
     }
 }

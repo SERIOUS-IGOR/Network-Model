@@ -1,4 +1,4 @@
-package nc.model.Network;
+package nc.model.network;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,9 +16,9 @@ public class Networks {
                 networks.put(networksIterator++,net);
             }
             catch (IllegalArgumentException e){return "Invalid name";}
-            return "Network with name \""+name+ "\" already exist";
+            return "network with name \""+name+ "\" already exist";
         }
-        else return "Network with name: " + name+ " was successfully created";
+        else return "network with name: " + name+ " was successfully created";
     }
     static public boolean doesNetworkExist(String networkName){
         for (Map.Entry entry:networks.entrySet()
@@ -44,7 +44,7 @@ public class Networks {
                 return (Network) entry.getValue();
             }
         }
-        throw new IllegalArgumentException("No such Network");
+        throw new IllegalArgumentException("No such network");
     }
     static public void deleteNetwork(String name){
         if(Networks.doesNetworkExist(name)){

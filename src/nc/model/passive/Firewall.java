@@ -1,6 +1,6 @@
-package nc.model.Passive;
+package nc.model.passive;
 
-import nc.model.Active.ActiveElement;
+import nc.model.active.ActiveElement;
 
 /**
  * Created by samok on 26.04.2017.

@@ -1,4 +1,4 @@
-package nc.model.Active;
+package nc.model.active;
 
 /**
  * Created by samok on 17.04.2017.

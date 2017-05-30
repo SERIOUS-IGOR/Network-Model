@@ -1,4 +1,4 @@
-package nc.model.Network;
+package nc.model.network;
 
 /**
  * Created by samok on 15.05.2017.
